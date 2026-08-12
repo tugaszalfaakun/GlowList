@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Produk() {
     const [produk, setProduk] = useState([]);
@@ -28,37 +29,40 @@ export default function Produk() {
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center">
                 <h2>Daftar Produk Glowlist</h2>
-        </div>
-        
+                <Link to="/produk/tambah" className="btn btn-primary">
+                    + Tambah Produk
+                </Link>
+            </div>
 
-        <table className="table table-bordered table-striped">
-            <thead className="table-primary">
-                <tr>
-                    <th>ID</th>
-                    <th>Judul</th>
-                    <th>Deskripsi</th>
-                    <th>Harga</th>
-                </tr>
-            </thead>
-            <tbody>
-                {produk.length > 0 ? (
-                    produk.map((item) =>(
-                        <tr key={item.id_produk}>
-                            <td>{item.id_produk}</td>
-                            <td>{item.judul}</td>
-                            <td>{item.deskripsi}</td>
-                            <td>{item.harga}</td>
-                        </tr>
-                    ))
-                ) : (
+
+            <table className="table table-bordered table-striped">
+                <thead className="table-primary">
                     <tr>
-                        <td colSpan="4" className="text-center">
-                            Belum ada produk
-                        </td>
+                        <th>ID</th>
+                        <th>Judul</th>
+                        <th>Deskripsi</th>
+                        <th>Harga</th>
                     </tr>
-                )}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {produk.length > 0 ? (
+                        produk.map((item) => (
+                            <tr key={item.id_produk}>
+                                <td>{item.id_produk}</td>
+                                <td>{item.judul}</td>
+                                <td>{item.deskripsi}</td>
+                                <td>{item.harga}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="4" className="text-center">
+                                Belum ada produk
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         </div>
     )
 }
