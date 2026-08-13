@@ -45,6 +45,8 @@ export default function Produk() {
         navigate(`/produk/edit/${id}`);
     };
 
+    
+
     if (loading) {
         return <div className="container mt-4">Sedang memuat data...</div>
     }

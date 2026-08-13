@@ -4,12 +4,14 @@ import {useParams, useNavigate } from "react-router-dom";
 export default function EditProduk() {
     const { id } = useParams();
     const navigate = useNavigate();
+    
     const [formData, setFormData] = useState({
         judul: "",
         deskripsi: "",
         harga: "",
         id_kategori: "",
     })
+    const [kategori, setKategori] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,6 +22,12 @@ export default function EditProduk() {
             setLoading(false);
         })
         .catch((err) => console.error(err));
+
+        fetch("http://localhost:5000/kategori")
+        .then((res) => res.json())
+        .then((data) => {
+            setKategori(data);
+        })
     }, [id]);
 
     const handleChange = (e) => {
@@ -31,6 +39,10 @@ export default function EditProduk() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!window.confirm("Yakin mau menyimpan perubahan ini?")) {
+            return;
+        }
         await fetch(`http://localhost:5000/produk/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -79,7 +91,25 @@ export default function EditProduk() {
                     />
                 </div>
 
-                
+                <div className="mb-3">
+                    <label className="form-label">Kategori</label>
+
+                    <select
+                        name="id_kategori"
+                        value={formData.id_kategori}
+                        onChange={handleChange}
+                        className="form-select"
+                        required
+                    >
+                        <option value="">-- Pilih Kategori --</option>
+
+                        {kategori.map((item) => (
+                            <option key={item.id_kategori} value={item.id_kategori}>
+                                {item.kategori}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <button type="submit" className="btn btn-success">
                     Simpan Perubahan
