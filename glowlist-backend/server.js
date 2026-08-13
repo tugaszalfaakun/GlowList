@@ -93,6 +93,19 @@ app.post('/pengguna', async (req, res) => {
     }
 });
 
+app.get ('/pengguna/me', authJWT, (req, res) => {
+    const id = req.user.id;
+
+    const sql = `SELECT id_pengguna, nama, email, no_hp FROM pengguna WHERE id_pengguna =?`;
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            return res.status(400).json({ message: 'Gagal mengambil data pengguna'});
+        };
+        res.json(results[0]);
+    })
+})
+
+
 app.get('/produk', (req, res) => {
     const sql = 'SELECT * FROM produk';
     db.query(sql, (err, results) => {
