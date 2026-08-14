@@ -45,7 +45,7 @@ export default function EditProduk() {
         }
         await fetch(`http://localhost:5000/produk/${id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             body: JSON.stringify(formData),
         });
         alert("Produk berhasil diperbarui!")
